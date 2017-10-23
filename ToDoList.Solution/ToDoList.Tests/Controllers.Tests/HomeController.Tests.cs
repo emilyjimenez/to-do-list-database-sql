@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using Rename.Models;
+using ToDoList.Models;
 
-namespace Rename.Controllers
+namespace ToDoList.Controllers
 {
     public class HomeController : Controller
     {

@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Rename
+namespace ToDoList
 {
+  public static class DBConfiguration
+  {
+    public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=rename_data;";
+  }
   public class Startup
   {
     public Startup(IHostingEnvironment env)
@@ -21,7 +25,6 @@ namespace Rename
     {
       services.AddMvc();
     }
-
     public void Configure(IApplicationBuilder app)
     {
       app.UseStaticFiles();
