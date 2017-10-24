@@ -34,7 +34,7 @@ namespace ToDoList.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM `task` WHERE id = @thisId;";
+      cmd.CommandText = @"SELECT * FROM `tasks` WHERE id = @thisId;";
 
       MySqlParameter thisId = new MySqlParameter();
       thisId.ParameterName = "@thisId";
@@ -48,8 +48,8 @@ namespace ToDoList.Models
 
       while (rdr.Read())
       {
-          taskId = rdr.GetInt32(1);
-          taskDescription = rdr.GetString(0);
+          taskId = rdr.GetInt32(0);
+          taskDescription = rdr.GetString(1);
       }
      Task foundTask= new Task(taskDescription, taskId);
 
@@ -58,7 +58,7 @@ namespace ToDoList.Models
       {
         conn.Dispose();
       }
-     return foundTask;   
+     return foundTask;
     }
     public void Save()
     {
@@ -66,7 +66,7 @@ namespace ToDoList.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO `task` (`description`) VALUES (@TaskDescription);";
+      cmd.CommandText = @"INSERT INTO `tasks` (`description`) VALUES (@TaskDescription);";
 
       MySqlParameter description = new MySqlParameter();
       description.ParameterName = "@TaskDescription";
@@ -87,12 +87,12 @@ namespace ToDoList.Models
         MySqlConnection conn = DB.Connection();
         conn.Open();
         MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM task;";
+        cmd.CommandText = @"SELECT * FROM tasks;";
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         while(rdr.Read())
         {
-          int taskId = rdr.GetInt32(1);
-          string taskDescription = rdr.GetString(0);
+          int taskId = rdr.GetInt32(0);
+          string taskDescription = rdr.GetString(1);
           Task newTask = new Task(taskDescription, taskId);
           allTasks.Add(newTask);
         }
@@ -109,7 +109,7 @@ namespace ToDoList.Models
         conn.Open();
 
         var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"DELETE FROM task;";
+        cmd.CommandText = @"DELETE FROM tasks;";
         cmd.ExecuteNonQuery();
 
         conn.Close();
